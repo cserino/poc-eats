@@ -1,3 +1,9 @@
+PATH
+  remote: ../platform
+  specs:
+    platform (0.1.0)
+      activerecord
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -41,6 +47,7 @@ DEPENDENCIES
   activerecord
   aws-sdk-lambda
   pg
+  platform!
 
 BUNDLED WITH
    2.1.4

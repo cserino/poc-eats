@@ -79,13 +79,13 @@ functions:
           path: /orders
           method: post
   db-create:
-    handler: db/handler.create
+    handler: handler.db_event
   db-migrate-preview:
-    handler: db/handler.migrate_preview
+    handler: handler.db_event
   db-migrate:
-    handler: db/handler.migrate
+    handler: handler.db_event
   db-schema-dump:
-    handler: db/handler.schema_dump
+    handler: handler.db_event
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

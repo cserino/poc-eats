@@ -1,8 +1,8 @@
 load "vendor/bundle/bundler/setup.rb"
 $LOAD_PATH.unshift(File.expand_path("./app", __dir__))
 
-require_relative 'db/config'
-DBConfig.init_database!
+require 'platform'
+Platform.init_database!
 
 require 'json'
 require 'aws-sdk-lambda'
@@ -15,6 +15,10 @@ def lambda_client(service)
       'AWS_LAMBDA_URL',
     )
   )
+end
+
+def db_event(event:, context:)
+  Platform.handle_database_event(ENV['AWS_LAMBDA_FUNCTION_NAME'], event, context)
 end
 
 def create_order(event:, context:)
