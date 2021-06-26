@@ -18,6 +18,7 @@ def lambda_client(service)
 end
 
 def db_event(event:, context:)
+  # ENV['AWS_LAMBDA_FUNCTION_NAME'] is set by the AWS sdk
   Platform.handle_database_event(ENV['AWS_LAMBDA_FUNCTION_NAME'], event, context)
 end
 

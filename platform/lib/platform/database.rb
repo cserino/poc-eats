@@ -24,8 +24,8 @@ module Platform
       db_config_admin = Platform.db_config.merge({database: 'postgres', schema_search_path: 'public'})
       ActiveRecord::Base.establish_connection(db_config_admin)
       connection = ActiveRecord::Base.connection
-      puts "creating database #{db_config[:database]}"
-      connection.create_database(db_config[:database])
+      puts "creating database #{Platform.db_config[:database]}"
+      connection.create_database(Platform.db_config[:database])
       'OK'
     end
 
