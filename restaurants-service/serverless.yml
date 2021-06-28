@@ -58,36 +58,42 @@ functions:
       - http:
           path: /echo/{uuid}
           method: get
-  index:
-    handler: handler.index
+  restaurants-index:
+    handler: app/handlers/restaurants_handler.RestaurantsHandler#index
     events:
       - httpApi:
           path: /restaurants
           method: get
-  show:
-    handler: handler.show
+  restaurants-show:
+    handler: app/handlers/restaurants_handler.RestaurantsHandler#show
     events:
       - httpApi:
-          path: /restaurants/{uuid}
+          path: /restaurants/{restaurant}
           method: get
-  create:
-    handler: handler.create
+  restaurants-create:
+    handler: app/handlers/restaurants_handler.RestaurantsHandler#create
     events:
       - httpApi:
           path: /restaurants
           method: post
-  update:
-    handler: handler.update
+  restaurants-update:
+    handler: app/handlers/restaurants_handler.RestaurantsHandler#update
     events:
       - httpApi:
-          path: /restaurants/{uuid}
+          path: /restaurants/{restaurant}
           method: put
-  destroy:
-    handler: handler.destroy
+  restaurants-destroy:
+    handler: app/handlers/restaurants_handler.RestaurantsHandler#destroy
     events:
       - httpApi:
-          path: /restaurants/{uuid}
+          path: /restaurants/{restaurant}
           method: delete
+  items-index:
+    handler: app/handlers/items_handler.ItemsHandler#index
+    events:
+      - httpApi:
+          path: /restaurants/{restaurant}/items
+          method: get
   db-create:
     handler: handler.db_event
   db-migrate-preview:
