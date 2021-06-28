@@ -24,13 +24,7 @@ def db_event(event:, context:)
 end
 
 def index(event:, context:)
-  restaurants = Restaurant.all
-  {
-    statusCode: 200,
-    body: {
-      restaurants: restaurants,
-    }.to_json
-  }
+  return_response(:restaurants, Restaurant.all)
 end
 
 def show(event:, context:)
@@ -39,12 +33,26 @@ def show(event:, context:)
   rescue ActiveRecord::RecordNotFound => err
     return bad_request(err.message)
   end
-  {
-    statusCode: 200,
-    body: {
-      restaurant: restaurant,
-    }.to_json
-  }
+  return_response(:restaurant, restaurant)
+end
+
+def create(event:, context:)
+  method = event.dig('requestContext', 'http', 'method')
+  if method == 'POST'
+    p 'POST Request'
+    p "event body is #{event['body']}"
+    return bad_request("body cannot be empty") if event['body'].nil?
+    body = JSON.parse(event['body'])
+  end
+  white_list_params = [:uuid, :name]
+  params = body.keep_if { |k, v| white_list_params.include?(k.to_sym) }
+  restaurant = Restaurant.new(params)
+
+  if restaurant.save
+    return_response(:restaurant, restaurant)
+  else
+    bad_request(restaurant.errors)
+  end
 end
 
 def echo_request(event:, context:)
@@ -65,6 +73,15 @@ def echo_request(event:, context:)
       qs_parms: event['queryStringParameters'],
       body: body,
       event: event,
+    }.to_json
+  }
+end
+
+def return_response(key, value)
+  {
+    statusCode: 200,
+    body: {
+      key.to_sym => value,
     }.to_json
   }
 end

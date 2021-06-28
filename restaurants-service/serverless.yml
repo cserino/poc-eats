@@ -70,6 +70,24 @@ functions:
       - httpApi:
           path: /restaurants/{uuid}
           method: get
+  create:
+    handler: handler.create
+    events:
+      - httpApi:
+          path: /restaurants
+          method: post
+  update:
+    handler: handler.update
+    events:
+      - httpApi:
+          path: /restaurants/{uuid}
+          method: put
+  destroy:
+    handler: handler.destroy
+    events:
+      - httpApi:
+          path: /restaurants/{uuid}
+          method: delete
   db-create:
     handler: handler.db_event
   db-migrate-preview:
